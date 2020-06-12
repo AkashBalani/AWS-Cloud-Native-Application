@@ -69,8 +69,12 @@
   connection: local
   tasks:
   - import_role:
-      name: create-cluster-with-webhook
-    tags: create-cluster-with-webhook
+      name: create-cluster
+    tags: create-cluster 
+  # You should run either of the role above or the one below
+  # - import_role:
+  #     name: create-cluster-with-webhook
+  #   tags: create-cluster-with-webhook
 
   - import_role:
       name: create-rds
