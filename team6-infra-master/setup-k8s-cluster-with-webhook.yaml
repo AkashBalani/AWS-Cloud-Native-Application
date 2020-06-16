@@ -89,6 +89,7 @@
   - import_role:
       name: create-monitoring-setup
     tags: create-monitoring-setup
+  # ansible-playbook setup-k8s-cluster-with-webhook.yaml --tags "create-monitoring-setup"
 
   - import_role:
       name: create-jenkins

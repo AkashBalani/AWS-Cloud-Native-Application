@@ -1,0 +1,30 @@
+---
+# tasks file for create-elk-stack
+  - name: Gathering Zones
+    aws_az_facts:
+      aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+      aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+      region: us-east-1
+    register: zones1
+    
+  - name: Apply Tiller/RBAC definition.
+    shell : "kubectl create -f rbac/rbac-config.yaml"
+    register: helm_tiller_result
+    changed_when: "'AlreadyExists' not in helm_tiller_result.stdout"
+    
+  - name: Installing Tiller
+    shell: "helm init --service-account tiller --wait"
+    #register: helm_init_result
+    #changed_when: "'has been installed' not in helm_init_result.stdout"
+    
+  - name: Enable Incubator repositories
+    shell: "helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/"
+    
+  - name: Helm repo update
+    shell: "helm repo update"
+
+  - name: Install elasticsearch
+    shell: "helm install --name elasticsearch elastic/elasticsearch"
+
+  - name: Install kibana
+    shell: "helm install --name kibana elastic/kibana"
