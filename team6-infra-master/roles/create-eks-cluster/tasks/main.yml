@@ -14,9 +14,10 @@
 
 - name: Create EKS cluster
   aws_eks_cluster:
-    name: "{{ cluster_name }}"
+    name: "{{ cluster_name_eks }}"
     aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
     aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
     region: "{{ aws_region }}"
+    role_arn: 
     state: present
 

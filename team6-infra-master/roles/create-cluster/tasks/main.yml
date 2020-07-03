@@ -29,14 +29,11 @@
 - block:
   - name: Configure the K8`s cluster
     shell: "kops create cluster \
-            --bastion={{ bastion }} \
-            --dns-zone={{ dns_zone }} \
             --master-size={{ master_size }} \
             --master-zones={{ master_zones|default(zones) }} \
             --master-count={{ master_count }} \
             --node-count={{ node_count }} \
             --node-size={{ node_size }} \
-            --topology={{ topology }} \
             --zones={{ zones }}  \
             --name={{ cluster_name }} \
             --state {{ state_store }} \
@@ -47,6 +44,7 @@
   rescue:
     - debug:
         msg: 'Error, usually because of Elastic IP Limit'
+# Please note that number of master zones must match the master count
 
 
 - name: kops create secret
