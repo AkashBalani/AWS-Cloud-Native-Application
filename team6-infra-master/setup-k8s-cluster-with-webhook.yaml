@@ -77,8 +77,8 @@
   #     name: create-cluster-with-webhook
   #   tags: create-cluster-with-webhook
   - import_role:
-      name: create-eks-cluster
-    tags: create-eks-cluster
+      name: create-elastic-stack
+    tags: create-elastic-stack
 
   - import_role:
       name: create-rds

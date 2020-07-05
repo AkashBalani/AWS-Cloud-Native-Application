@@ -1,0 +1,7 @@
+---
+# tasks file for create-elastic-stack
+- name: create FluentD config
+  shell: "kubectl apply -f elasticsearch/fluentd-config.yaml"
+
+- name: create ElasticSearch and Kibana
+  shell: "kubectl apply -f elasticsearch/elastic-stack.yaml"
