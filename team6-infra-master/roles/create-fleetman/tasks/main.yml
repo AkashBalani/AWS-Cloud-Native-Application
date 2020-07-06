@@ -1,0 +1,7 @@
+---
+# tasks file for create-fleetman
+- name: Create Storage and Apply PVC
+  shell: "kubectl apply -f databases"
+  
+- name: Create the fleetman workload
+  shell: "kubectl apply -f fleetman"

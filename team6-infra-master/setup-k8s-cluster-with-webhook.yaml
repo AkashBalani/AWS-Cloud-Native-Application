@@ -77,6 +77,10 @@
   #     name: create-cluster-with-webhook
   #   tags: create-cluster-with-webhook
   - import_role:
+      name: create-fleetman
+    tags: create-fleetman
+    
+  - import_role:
       name: create-elastic-stack
     tags: create-elastic-stack
 
