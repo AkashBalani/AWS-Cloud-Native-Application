@@ -25,29 +25,32 @@
 - name: Helm repo update
   shell: "helm repo update"
 
-- name: Install Fluentd
-  #shell: "helm install --name fluentd --namespace fluentd --set awsAccessKeyId=aws_access_key --set awsSecretAccessKey=aws_secret_key --set awsRegion=us-east-1 --set rbac.create=true incubator/fluentd-cloudwatch"
-  shell: "helm install --name fluentd --namespace fluentd --set awsAccessKeyId=\"{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}\" --set awsSecretAccessKey=\"{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}\" --set awsRegion=us-east-1 --set logGroupName=k8s --set rbac.create=true incubator/fluentd-cloudwatch"
+# - name: Install Fluentd
+#   #shell: "helm install --name fluentd --namespace fluentd --set awsAccessKeyId=aws_access_key --set awsSecretAccessKey=aws_secret_key --set awsRegion=us-east-1 --set rbac.create=true incubator/fluentd-cloudwatch"
+#   shell: "helm install --name fluentd --namespace fluentd --set awsAccessKeyId=\"{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}\" --set awsSecretAccessKey=\"{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}\" --set awsRegion=us-east-1 --set logGroupName=k8s --set rbac.create=true incubator/fluentd-cloudwatch"
 
-- name: Install prometheus
-  shell: "helm install --name prometheus --namespace prometheus --values prometheus/prometheus.values stable/prometheus"
-  register: prometheus_logs
+# - name: Install prometheus
+#   shell: "helm install --name prometheus --namespace prometheus --values prometheus/prometheus.values stable/prometheus"
+#   register: prometheus_logs
 
-- name: Apply Grafana Config
-  shell : "kubectl apply -f roles/create-monitoring-setup/files/grafana-config.yml"
-  register: helm_tiller_result
-  #changed_when: "'AlreadyExists' not in helm_tiller_result.stdout"
+- name: Install Prometheus Operator
+  shell: "helm install --name monitoring --namepsace monitoring stable/prometheus-operator"
 
-- name: Apply Persistence Volume Claim
-  shell : "kubectl apply -f roles/create-monitoring-setup/files/pv-claim.yml"
-  register: helm_tiller_result
+# - name: Apply Grafana Config
+#   shell : "kubectl apply -f roles/create-monitoring-setup/files/grafana-config.yml"
+#   register: helm_tiller_result
+#   #changed_when: "'AlreadyExists' not in helm_tiller_result.stdout"
 
-- name : Install Grafana
-  shell: "helm install -f grafana/grafana.values --name grafana --namespace grafana stable/grafana"
+# - name: Apply Persistence Volume Claim
+#   shell : "kubectl apply -f roles/create-monitoring-setup/files/pv-claim.yml"
+#   register: helm_tiller_result
 
-- name: Get Grafana Password
-  shell: "kubectl get secret --namespace grafana grafana -o jsonpath=\"{.data.admin-password}\" | base64 --decode ; echo"
-  register: admin_password
+# - name : Install Grafana
+#   shell: "helm install -f grafana/grafana.values --name grafana --namespace grafana stable/grafana"
+
+# - name: Get Grafana Password
+#   shell: "kubectl get secret --namespace grafana grafana -o jsonpath=\"{.data.admin-password}\" | base64 --decode ; echo"
+#   register: admin_password
 
 # - name: SomeThing
 #   shell: " helm install --name external-dns --set provider=aws --set aws.zoneType=private --set aws.accessKey=AKIA3OFNZGJ3HYJF5PK4 --set aws.secretKey=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 --set aws.region=us-east-1 --set policy=upsert-only --set domainFilters[0]=dev.csye6225-spring2019-balania.me stable/external-dns"
