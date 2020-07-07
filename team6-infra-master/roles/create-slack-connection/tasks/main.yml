@@ -1,4 +1,7 @@
 ---
 # tasks file for create-slack-connection
-- name: Create Slack to AlertManager Connection
-  shell: "kubectl apply -f slack"
+- name: Delete Existing Secret for AlertManager
+  shell: "kubectl delete secret alertmanager-monitoring-prometheus-oper-alertmanager -n monitoring"
+
+- name: Create new secret with Slack connection
+  shell: "kubectl create secret generic alertmanager-monitoring-prometheus-oper-alertmanager -n monitoring --from-file=slack/alertmanager.yaml"
