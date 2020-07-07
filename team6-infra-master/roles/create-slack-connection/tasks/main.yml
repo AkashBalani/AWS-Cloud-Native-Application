@@ -1,0 +1,4 @@
+---
+# tasks file for create-slack-connection
+- name: Create Slack to AlertManager Connection
+  shell: "kubectl apply -f slack"

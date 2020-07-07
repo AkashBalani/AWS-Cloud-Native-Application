@@ -85,6 +85,10 @@
     tags: create-elastic-stack
 
   - import_role:
+      name: create-slack-connection
+    tags: create-slack-connection
+
+  - import_role:
       name: create-rds
     tags: create-rds
 
