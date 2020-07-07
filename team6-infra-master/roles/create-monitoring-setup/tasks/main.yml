@@ -34,7 +34,7 @@
 #   register: prometheus_logs
 
 - name: Install Prometheus Operator
-  shell: "helm install --name monitoring --namepsace monitoring stable/prometheus-operator"
+  shell: "helm install --name monitoring --namespace monitoring stable/prometheus-operator"
 
 # - name: Apply Grafana Config
 #   shell : "kubectl apply -f roles/create-monitoring-setup/files/grafana-config.yml"
