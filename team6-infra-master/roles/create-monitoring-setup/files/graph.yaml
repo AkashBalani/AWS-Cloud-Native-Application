@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/version: 7.0.3
+    helm.sh/chart: grafana-5.3.0
+  name: monitoring-grafana
+  namespace: monitoring
+spec:
+  clusterIP: 100.65.221.38
+  ports:
+  - name: service
+    port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/name: grafana
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
