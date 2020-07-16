@@ -33,8 +33,11 @@
 #   shell: "helm install --name prometheus --namespace prometheus --values prometheus/prometheus.values stable/prometheus"
 #   register: prometheus_logs
 
-- name: Install Prometheus Operator
-  shell: "helm install --name monitoring --namespace monitoring stable/prometheus-operator --set prometheus.service.type=LoadBalancer --values roles/create-monitoring-setup/files/graph.yaml"
+- name: Install Prometheus
+  shell: "helm install --name monitoring --namespace monitoring stable/prometheus --set server.service.type=LoadBalancer"
+
+- name: Install Grafana
+  shell: "helm install --name grafana --namespace monitoring stable/grafana --set service.type=LoadBalancer"
 
 # - name: Apply Grafana Config
 #   shell : "kubectl apply -f roles/create-monitoring-setup/files/grafana-config.yml"
