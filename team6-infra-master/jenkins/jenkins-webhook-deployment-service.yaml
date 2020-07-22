@@ -1,0 +1,91 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-ci
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-ci
+      name: jenkins-ci
+  template:
+    metadata:
+      labels:
+        app: jenkins-ci
+        name: jenkins-ci
+    spec:
+      containers:
+      - name: jenkins-ci
+        imagePullPolicy: Always
+        image: karolisr/jenkins-ci:latest
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 40
+          periodSeconds: 20
+        securityContext: 
+          privileged: true 
+        volumeMounts: 
+          - mountPath: /var/run
+            name: docker-sock 
+          - mountPath: /var/jenkins_home
+            name: jenkins-home
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 150m
+            memory: 256Mi
+      - name: webhookrelayd
+        image: "webhookrelay/webhookrelayd:latest"
+        imagePullPolicy: IfNotPresent
+        command: ["/relayd"]
+        env:
+          - name: KEY
+            valueFrom:
+              secretKeyRef:
+                name: webhookrelay-credentials
+                key: key
+          - name: SECRET
+            valueFrom:
+              secretKeyRef:
+                name: webhookrelay-credentials
+                key: secret
+          - name: BUCKET
+            value: "jenkins"
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+      volumes: 
+        - name: docker-sock
+          hostPath: 
+            path: /var/run
+        - name: jenkins-home
+          hostPath: 
+            path: /var/jenkins_home
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-ci-lb
+spec:
+ type: LoadBalancer
+ ports:
+   - name: jenkins
+     port: 8080
+     targetPort: 8080
+   - name: jenkins-agent
+     port: 50000
+     targetPort: 50000
+ selector:
+   name: jenkins-ci
