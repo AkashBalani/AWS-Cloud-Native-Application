@@ -34,7 +34,12 @@
 #   register: prometheus_logs
 
 - name: Install Prometheus
-  shell: "helm install --name monitoring --namespace monitoring stable/prometheus --set server.service.type=LoadBalancer"
+  shell: "helm install --name prometheus --namespace monitoring stable/prometheus --set server.service.type=LoadBalancer"
+
+  # Prometheus operator does both Prometheus and Grafana but still needs work in this deployment
+
+# - name: Install Prometheus Operator
+#   shell: "helm install --name monitoring --namespace monitoring stable/prometheus-operator --set server.service.type=LoadBalancer"
 
 - name: Install Grafana
   shell: "helm install --name grafana --namespace monitoring stable/grafana --set service.type=LoadBalancer"
