@@ -33,6 +33,13 @@ yadav.su@husky.neu.edu
        NOTE : Main account should include NS record for these to subdomains.
 ```
 
+P.S. This is no longer a requirement we can also deploy a cluser using gossip me like so
+
+2.a. Name the Cluser 
+```
+       cluster_name: xxxx.k8s.local
+```
+
 3. Install Following
 ```
     kops
