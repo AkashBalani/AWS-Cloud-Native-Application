@@ -37,3 +37,8 @@ You can view their endpoints by the following command
 
 For getting the Grafana Password use the following command
 `kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
+
+In the EFK stack, Kibana is deployed as a LoadBalancer
+Please make changes if you dont want these as Load Balancers as they can incur significant charges!
+To view Kibana Endpoint use the following command
+`kubectl get svc -n kube-system`
