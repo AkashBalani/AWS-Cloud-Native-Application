@@ -17,6 +17,8 @@ This will deploy the frontend + backend + database on AWS
 
 4. `ansible-playbook setup-k8s-cluster-with-webhook.yaml -vvvv --tags "create-elastic-stack"`
 
+P.S It is recommended that you use atleast t2.medium as t2.micro is not sufficient for elasticsearch Nodes
+
 This will deploy an EFK (Elastic - FluentD - Kibana) Stack
 
 5. `ansible-playbook setup-k8s-cluster-with-webhook.yaml -vvvv --tags "create-monitoring-setup"`
