@@ -13,7 +13,6 @@ spec:
   ports:
     - name: http
       port: 80
-
   type: LoadBalancer
 ---
 apiVersion: v1

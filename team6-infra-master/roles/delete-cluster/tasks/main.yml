@@ -8,7 +8,7 @@
 #    name: "{{ cluster_name }}"
 #    cidr_block: 172.20.0.0/16 #Need to find it dynamically
 #    state: absent
-- block:
+
   #- name: Delete the cluster
   #  shell: "kops delete cluster {{ cluster_name }} --state {{ state_store }} --yes"
 
@@ -50,12 +50,25 @@
 #      state: absent
 #    ignore_errors: yes
 
+# Working on this method
+
+# - block:
+#   - name: check if {{ cluster_name }} doesn't exist
+#     shell: kops get clusters --state {{ state_store }} {{ cluster_name }}
+#     register: kops_get_clusters
+#     changed_when: no
+#     failed_when: no
+#   rescue:
+#     - debug:
+#         msg: 'Cluster is present'
+- block:
   - name: Delete the cluster
     shell: "kops delete cluster {{ cluster_name }} --state {{ state_store }} --yes"
     register: cmd_result
     until: cmd_result.stdout.find('Deleted cluster') != -1
     retries: 20
     delay: 60
+    # when: "kops_get_clusters.stderr.find('not found') == -1"
   rescue:
     - ec2_vpc_net_facts: #gathering facts about ec2 vpc's
         filters:
