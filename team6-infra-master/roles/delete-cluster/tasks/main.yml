@@ -50,7 +50,6 @@
 #      state: absent
 #    ignore_errors: yes
 
-# Working on this method
 
 - block:
   - name: check if {{ cluster_name }} doesn't exist
@@ -61,7 +60,7 @@
   rescue:
     - debug:
         msg: 'Cluster is present'
-        
+
 - block:
   - name: Delete the cluster
     shell: "kops delete cluster {{ cluster_name }} --state {{ state_store }} --yes"
