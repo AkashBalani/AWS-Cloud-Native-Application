@@ -108,3 +108,6 @@ kops validate cluster <cluster-name> --state <s3-bucket-name>
 
 
 ```
+
+- [ ] Create Jenkins PVC code in create Jenkins role
+- [ ] Add Delete Jenkins to main playbook 
