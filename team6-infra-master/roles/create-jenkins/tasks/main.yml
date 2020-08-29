@@ -5,6 +5,11 @@
   register: kubectl_name_result
   changed_when: "'AlreadyExists' not in kubectl_name_result.stdout"
 
+- name: Apply Jenkins PVC.
+  shell : "kubectl apply -f jenkins/jenkins-volume.yaml"
+  register: kubectl_name_result
+  changed_when: "'AlreadyExists' not in kubectl_name_result.stdout"
+
 - name: Apply Jenkins Deployment.
   shell : "kubectl apply -f jenkins/jenkins-deployment1.yaml"
   register: kubectl_deployment_result
