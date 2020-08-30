@@ -110,5 +110,8 @@ kops validate cluster <cluster-name> --state <s3-bucket-name>
 ```
 
 - [X] Create Jenkins PVC code in create Jenkins role
-- [] Test Jenkins with the new workload
+- [X] Add Jenkins Service Account
+- [ ] Make Changes in Jenkins Service Account + RBAC
+- [ ] Search "How to automatically install jenkins plugins during installation"
+- [ ] Test Jenkins with the new workload
 - [ ] Add Delete Jenkins to main playbook 

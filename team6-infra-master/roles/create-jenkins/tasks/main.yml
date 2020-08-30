@@ -20,5 +20,10 @@
   register: kubectl_service_result
   changed_when: "'AlreadyExists' not in kubectl_service_result.stdout"
 
+- name: Apply Jenkins Service Account.
+  shell : "kubectl apply -f jenkins/jenkins-rbac.yaml"
+  register: kubectl_service_result
+  changed_when: "'AlreadyExists' not in kubectl_service_result.stdout"
+
 # - name: Install Jenkins with Helm
 #   shell: "helm install stable/jenkins"
