@@ -112,7 +112,8 @@ kops validate cluster <cluster-name> --state <s3-bucket-name>
 - [X] Create Jenkins PVC code in create Jenkins role
 - [X] Add Jenkins Service Account
 - [X] Make Changes in Jenkins Service Account + RBAC (Had to change the way it was connecting to kubernetes)
-- [ ] Need to add Pod Templates for Worker nodes
+- [ ] Install Docker image in all pods
+- [ ] Define Pod Template for Worker nodes
 - [ ] Search "How to automatically install jenkins plugins during installation"
 - [ ] Test Jenkins with the new workload
 - [ ] Add Delete Jenkins to main playbook 
